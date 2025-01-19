@@ -75,6 +75,8 @@ int main(int argc, char **argv) {
     }
 
     int datatype_size = sizeof(uint16_t);
+    // This was only tested on a 64x64 grid
+    // dont change it unless you know what you are doing
     int height = 64;
     int width = 64;
     int num_tiles = 2;
