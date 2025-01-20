@@ -45,52 +45,28 @@ void kernel_main() {
         .data_format = src2_data_format
     };
 
-    DPRINT << "(READER): About to start kernel_main" << ENDL();
-
     // load top and bottom tile first
-    DPRINT << "(READER): Waiting for cb_id_in0 and cb_id_in1" << ENDL();
     cb_reserve_back(cb_id_in0, single_tile);
     cb_reserve_back(cb_id_in1, single_tile);
 
-    DPRINT << "(READER): Getting read pointers for cb_id_in0 and cb_id_in1" << ENDL();
     uint32_t top = get_read_ptr(cb_id_in0);
     uint32_t bottom = get_read_ptr(cb_id_in1);
 
-    DPRINT << "(READER): Writing to NoC" << ENDL();
-
     uint32_t *top_tile = (uint32_t *)top;
-
-    DPRINT << "(READER) top_tile[0] = " << top_tile[0] << ENDL();
-
     noc_async_read_tile(0, s0, top);
     noc_async_read_barrier();
     noc_async_read_tile(0, s1, bottom);
     noc_async_read_barrier();
     
-    DPRINT << "(READER): Popping front for cb_id_in0 and cb_id_in1" << ENDL();
-
     cb_push_back(cb_id_in0, single_tile);
     cb_push_back(cb_id_in1, single_tile);
 
-    DPRINT << "(READER): Reading from src0" << ENDL();
-
-
     for (uint32_t i = 0; i < num_tiles; i++) {
-        DPRINT << "(READER) Iteration " << i << ": Waiting for cb_id_in2" << ENDL();
         cb_reserve_back(cb_id_in2, single_tile);
-
-        DPRINT << "(READER) Iteration " << i << ": Getting read pointer for cb_id_in2" << ENDL();
         uint32_t output = get_read_ptr(cb_id_in2);
         uint32_t *output_tile = (uint32_t *)output;
-
-        DPRINT << "(READER) Iteration " << i << ": Writing tile to NoC" << ENDL();
         noc_async_read_tile(i, s2, output);
         noc_async_read_barrier();
-
-        DPRINT << "(READER) Iteration " << i << ": Popping front for cb_id_in2" << ENDL();
         cb_push_back(cb_id_in2, single_tile);
     }
-
-
-    DPRINT << "(READER): Finished kernel_main" << ENDL();
 }

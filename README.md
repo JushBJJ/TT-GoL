@@ -33,6 +33,8 @@ In this implementation, we use `cb_id_in0` as the top tile, `cb_id_in1` as the b
 
 2. You need to build `TT-Metal` which you can follow through [here](https://github.com/tenstorrent/tt-metal/blob/main/INSTALLING.md)
 
+*THIS PROJECT WAS BUILT IN TT-METAL COMMIT `91e61c006a9c1900ec90aee8e0898f69574bae04`, will update soon so it works with the latest commits.
+
 3. Set environment variables before building TT-GoL
 ```sh
 export TT_METAL_HOME=/path/to/tt-metal

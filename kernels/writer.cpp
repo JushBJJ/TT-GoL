@@ -136,11 +136,6 @@ void kernel_main() {
     int tile_width = (int)(Q_sqrt(single_tile_size * 2) + 0.5f);
     int tile_height = tile_width;
 
-    DPRINT << "tile_width: " << tile_width << ENDL();
-    DPRINT << "tile_height: " << tile_height << ENDL();
-    DPRINT << "single_tile_size: " << single_tile_size << ENDL();
-    DPRINT << "num_tiles: " << num_tiles << ENDL();
-
     // equilvalent of a single step
     for (uint32_t i = 0; i < num_tiles; i++) {
         cb_wait_front(cb_id_in2, single_tile);
